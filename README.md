@@ -1,5 +1,3 @@
----
-
 ## 🔍 Analytical Approach
 
 ### Ground Truth Labelling
@@ -23,7 +21,7 @@
 - **Speed:** Processing time extrapolated to 50,000-review production workload
 - **Cost:** API token costs (input + output) projected at scale
 
----
+
 
 ## 📊 How the Decision Was Made
 
@@ -66,7 +64,7 @@ Even a Mac Studio with 96GB RAM is estimated at 3–5 days — still impractical
 and the hardware investment dwarfs the $24 API cost per run.
 Cloud deployment is the only viable production path.
 
----
+
 
 ## 🔬 Error Autopsy — Where Models Fail
 
@@ -119,7 +117,7 @@ mitigations for production deployment:
 - Human spot-checks on ambiance ratings should be maintained for the
   first 90 days post-deployment
 
----
+
 
 ## 🚧 Technical Challenges Solved
 
@@ -155,7 +153,7 @@ Gemma results showed meaningful improvement over LLaMA.
 Learning: Always confirm which model is actually loaded before benchmarking.
 Silent configuration errors produce plausible-looking but wrong results.
 
----
+
 
 ## 💼 Skills Demonstrated
 
@@ -177,7 +175,7 @@ Silent configuration errors produce plausible-looking but wrong results.
 - Manual error autopsy to understand model failure modes qualitatively
 - Extrapolated 200-review sample results to production-scale cost and time
 
----
+
 
 ## 📈 Business Impact
 
@@ -188,7 +186,7 @@ either local model — was driven by a 28-percentage-point coverage advantage
 in ambiance: the category most directly linked to dining experience and
 location-level performance differences.
 
----
+
 
 ## 🎓 Key Learnings
 
@@ -206,14 +204,14 @@ location-level performance differences.
    individual scoring bias — especially on ambiance — cannot be detected
    or corrected for.
 
----
+
 
 ## 📞 Contact
 
-[Your Name]
-[your@email.com] | [LinkedIn Profile]
+Armin Schnichels
+arminschnichels@gmail.com
 
----
+
 
 ## 📝 Project Background
 
@@ -229,7 +227,7 @@ something else entirely?*
 Adding Gemma answered that question — and unexpectedly produced the strongest performer
 on coverage, which became the basis for the final recommendation.
 
----
+
 
 ## 📜 Project Context
 
