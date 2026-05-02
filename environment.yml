@@ -1,0 +1,17 @@
+name: velox-sentiment-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - pandas
+  - numpy
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - python-dotenv
+  - ipykernel
+  - pip
+  - pip:
+      - ollama
+      - groq
