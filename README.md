@@ -1,3 +1,5 @@
+📄 **[Read the full executive report (PDF)](report/Velox_Foods_AI_Review_Analysis.pdf)**
+
 # Local vs. Cloud LLM Benchmark
 Python · NLP · Aspect-Based Sentiment Analysis
 
