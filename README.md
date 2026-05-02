@@ -1,3 +1,120 @@
+# Local vs. Cloud LLM Benchmark
+Python · NLP · Aspect-Based Sentiment Analysis
+
+## 📊 Project Overview
+
+**Business Context:**
+Velox Foods operates 514 franchised restaurants. Growth has stagnated and the board
+wants to understand why some locations outperform others. The existing analytics stack
+tracks star ratings — but ignores thousands of written customer reviews sitting unused
+in the database. As the Data Analyst responsible for this evaluation, I built and
+compared three AI pipelines — two local models and one cloud API — to extract
+structured sentiment from unstructured review text at scale.
+
+**Core Question:**
+Can a free local model handle aspect-based sentiment analysis reliably enough, or does
+Velox Foods need to pay for a cloud API?
+
+**My Role:** Full pipeline build, model evaluation, and executive recommendation
+**Tools:** Python, Ollama, Groq API, Pandas, Scikit-learn, Matplotlib, Seaborn
+**Dataset:** 200 customer reviews (human-labelled ground truth, 3 annotators)
+
+
+
+## 🎯 Key Findings
+
+### Reliability — Mean Absolute Error (lower is better)
+*Scale: -1 (negative) to +1 (positive)*
+
+| Aspect | LLaMA 3.2 3B | Gemma 4 9B | GPT-OSS-120B |
+|---|---|---|---|
+| Overall | 0.2832 | **0.1777** | 0.2080 |
+| Food | 0.2878 | **0.1804** | 0.1879 |
+| Service | 0.1786 | **0.1750** | 0.1848 |
+| Price | 0.2900 | **0.3524** | **0.2632** |
+| Ambiance | 0.4000 | 0.3471 | **0.3409** |
+
+→ Gemma wins on most aspects. GPT edges it on price and ambiance accuracy.
+LLaMA is the weakest performer across the board.
+
+### Coverage — Recall (higher is better)
+*What percentage of human-labelled reviews did the AI actually rate?*
+
+| Aspect | LLaMA 3.2 3B | Gemma 4 9B | GPT-OSS-120B |
+|---|---|---|---|
+| Overall | 95.54% | **100%** | **100%** |
+| Food | 90.74% | **99.07%** | **99.07%** |
+| Service | 75.68% | **91.89%** | 89.19% |
+| Price | 41.67% | **87.50%** | 79.17% |
+| **Ambiance** | 40.48% | **80.95%** | 52.38% |
+
+→ This is the decisive finding. LLaMA ignores nearly 60% of ambiance and price
+feedback — immediately disqualifying it. GPT misses ~48% of ambiance signals
+despite being the premium cloud option. Gemma captures the most customer voices
+across every category.
+
+### Speed — Time to Process 50,000 Reviews
+
+| Method | Estimated Time |
+|---|---|
+| Local LLaMA 3.2 3B | ~7.8 days |
+| Local Gemma 4 9B | ~25.1 days |
+| Cloud API (Groq) | ~20.7 hours |
+
+→ Both local models are impractical for production use. Cloud processing
+delivers results in under a day.
+
+### Cost — Full 50,000 Review Run
+
+| Option | Cost |
+|---|---|
+| Local models | $0 direct — but weeks of locked hardware |
+| GPT-OSS-120B via Groq | $31.84 |
+| Gemma 4 31B via Cloud API (recommended) | ~$24.00 |
+
+
+
+## ✅ Strategic Recommendation
+
+**Deploy Gemma 4 31B via Google Cloud API.**
+
+| Condition | Detail |
+|---|---|
+| Model | Gemma 4 31B (scaled up from tested 9B) |
+| Deployment | Cloud API |
+| Estimated cost / 50K reviews | ~$24 |
+| Turnaround | Under 24 hours |
+| First run | Full 50,000-review backlog immediately |
+
+**Rationale:**
+Coverage gaps are more operationally dangerous than marginal accuracy differences.
+GPT silently ignores nearly 50% of ambiance feedback. LLaMA ignores nearly 60%.
+Gemma outperforms both on coverage while matching or beating GPT on accuracy —
+at a lower API cost. A cloud deployment eliminates the 25-day local processing
+bottleneck for $24 per full dataset run. As an open-weight model, Gemma also
+offers future fine-tuning on Velox-specific data — an option unavailable with
+proprietary models.
+
+
+
+## 📁 Repository Structure
+
+├── data/
+│   ├── restaurant_reviews_sample.csv   # 200 raw customer reviews
+│   └── ground_truth.csv                # Human-labelled benchmark (3 annotators)
+├── notebooks/
+│   ├── 01_create_ground_truth.ipynb    # Annotation sheet creation
+│   ├── 02_local_pipeline_llama.ipynb   # LLaMA 3.2 3B via Ollama
+│   ├── 02_local_pipeline_gemma.ipynb   # Gemma 4 9B via Ollama
+│   ├── 03_cloud_pipeline_groq.ipynb    # GPT-OSS-120B via Groq API
+│   ├── 04_accuracy_evaluation.ipynb    # MAE, std deviation, recall per aspect
+│   └── 05_operational_metrics.ipynb    # Speed, cost, token analysis
+├── report/
+│   └── Velox_Foods_AI_Review_Analysis.pdf
+├── .env.example                        
+├── environment.yml
+└── README.md
+
 ## 🔍 Analytical Approach
 
 ### Ground Truth Labelling
